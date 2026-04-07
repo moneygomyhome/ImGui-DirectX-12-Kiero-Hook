@@ -8,6 +8,8 @@
 #include <imgui_impl_dx12.h>
 #include <thread>
 
+#include "esp_hud.h"
+
 // Debug
 #include <dxgidebug.h>
 #pragma comment(lib, "dxguid.lib")
@@ -288,6 +290,13 @@ HRESULT __fastcall hkPresent(IDXGISwapChain3 *pSwapChain, UINT SyncInterval, UIN
     g_pd3dCommandList->OMSetRenderTargets(1, &g_frameContext[backBufferIdx].g_mainRenderTargetDescriptor, FALSE, nullptr);
     g_pd3dCommandList->SetDescriptorHeaps(1, &g_pd3dSrvDescHeap);
 
+    {
+        if (init)
+        {
+            DrawESP_HUD();
+        }
+    }
+
     ImGui::Render();
     ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), g_pd3dCommandList);
 
@@ -298,6 +307,8 @@ HRESULT __fastcall hkPresent(IDXGISwapChain3 *pSwapChain, UINT SyncInterval, UIN
     g_pd3dCommandList->Close();
 
     g_pd3dCommandQueue->ExecuteCommandLists(1, reinterpret_cast<ID3D12CommandList *const *>(&g_pd3dCommandList));
+
+
 
     return oPresent(pSwapChain, SyncInterval, Flags);
 }

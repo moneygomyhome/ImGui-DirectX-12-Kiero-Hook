@@ -37,18 +37,25 @@ include_directories(
     vendor/kiero
     vendor/imgui
     vendor/imgui/backends
+        ESPMod
 )
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
 
 add_subdirectory(vendor/minhook)
 
+add_subdirectory(ESPMod)
+
+
 target_link_libraries(${PROJECT_NAME} PRIVATE
     minhook
     d3d12
     dxgi
+        ESPMod
 )
 
 if(MSVC)
     add_compile_options(/std:c++17)
 endif()
+
+
