@@ -86,7 +86,7 @@ bool MainThread(HMODULE Module)
     /* The Object we created is a subclass of UConsole, so this cast is **safe**. */
     Engine->GameViewport->ViewportConsole = static_cast<SDK::UConsole*>(NewObject);
 
-    RenderLoop();
+    //RenderLoop();
 
 
     return 0;
